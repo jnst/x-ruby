@@ -11,4 +11,23 @@ module Code
     []
   end
 
+  # Given a 32-bit signed integer, reverse digits of an integer.
+  # 123 => 321, -123 => -321, 120 => 21
+  def self.reverse_integer(x)
+    s = x.to_s.reverse
+
+    negative = false
+    if s.include?('-')
+      s.delete!('-')
+      negative = true
+    end
+
+    n = s.to_i
+    n *= -1 if negative
+
+    return 0 if n < -2**31 || (2**31 - 1) < n
+
+    n
+  end
+
 end
