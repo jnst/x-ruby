@@ -29,3 +29,13 @@ RSpec.describe '#reverse_integer' do
     expect(Code.reverse_integer(max + 1)).to eq 0
   end
 end
+
+RSpec.describe '#string_to_integer' do
+  it 'should convert to valid integer' do
+    expect(Code.string_to_integer('+123')).to eq(123)
+    expect(Code.string_to_integer('+123+')).to eq(123)
+    expect(Code.string_to_integer('+123-')).to eq(123)
+    expect(Code.string_to_integer('    +123   ')).to eq(123)
+    expect(Code.string_to_integer('-42')).to eq(-42)
+  end
+end

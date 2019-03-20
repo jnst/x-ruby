@@ -1,6 +1,5 @@
 # Sample code
 module Code
-
   # Returns indices where the sum of two numbers in the array equals target
   def self.two_sum(nums, target)
     nums.each_with_index do |_n1, i|
@@ -30,4 +29,18 @@ module Code
     n
   end
 
+  # Discard except plus, minus and digits. Then convert to integer.
+  def self.string_to_integer(str)
+    s = str.strip
+    return 0 unless s.match?(/^+|^\-|^-d/)
+
+    n = s.to_i
+
+    max = 2**31 - 1
+    min = -2**31
+    return max if max < n
+    return min if n < min
+
+    n
+  end
 end
