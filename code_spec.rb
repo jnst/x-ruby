@@ -39,3 +39,26 @@ RSpec.describe '#string_to_integer' do
     expect(Code.string_to_integer('-42')).to eq(-42)
   end
 end
+
+RSpec.describe '#is_number' do
+  it 'should valid number' do
+    expect(Code.is_number('0')).to eq true
+    expect(Code.is_number(' 0.1 ')).to eq true
+    expect(Code.is_number('abc')).to eq false
+    expect(Code.is_number('1 a')).to eq false
+    expect(Code.is_number('2e10')).to eq true
+    expect(Code.is_number(' -90e3   ')).to eq true
+    expect(Code.is_number(' 1e')).to eq false
+    expect(Code.is_number('e3')).to eq false
+    expect(Code.is_number(' 6e-1')).to eq true
+    expect(Code.is_number(' 99e2.5')).to eq false
+    expect(Code.is_number('53.5e93')).to eq true
+    expect(Code.is_number(' --6 ')).to eq false
+    expect(Code.is_number('-+3')).to eq false
+    expect(Code.is_number('95a54e53')).to eq false
+    expect(Code.is_number(' ')).to eq false
+    expect(Code.is_number('.1')).to eq true
+    expect(Code.is_number('.0e')).to eq false
+    expect(Code.is_number('.9')).to eq false
+  end
+end

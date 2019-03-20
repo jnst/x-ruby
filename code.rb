@@ -43,4 +43,59 @@ module Code
 
     n
   end
+
+  # Validate the number.
+  def self.is_number(str)
+    s = str.strip
+
+    return false if s.empty?
+    return true if /^\.\d+$/.match?(s)
+
+    signs = ['+', '-']
+
+    arr = s.split('')
+    last_index = arr.size - 1
+    arr.each_with_index do |c, i|
+      return false if i != 0 && signs.include?(c)
+      return false if c == '-' && (i <= last_index && !/\d/.match?(arr[i + 1]))
+      return false if c != 'e' && c != '.' && !signs.include?(c) && !/\d/.match?(c)
+    end
+
+    has_sign = signs.include?(s[0])
+
+    return false if !has_sign && /[^\d]/.match?(s[0])
+    return false if s[s.size - 1] == 'e'
+
+    arr.each_with_index do |c, i|
+      return false if i > 0 && !signs.include?(c) && /[^\d|^e|^\.]/.match?(c)
+    end
+
+    decimal_point_count = 0
+    arr.each do |c|
+      decimal_point_count += 1 if c == '.'
+      return false if decimal_point_count >= 2
+    end
+
+    sign_count = 0
+    arr.each do |c|
+      sign_count += 1 if signs.include?(c)
+      return false if sign_count >= 2
+    end
+
+    is_exponent = false
+    exponent_index = -1
+    arr.each_with_index do |c, i|
+      return false if i.zero? && ['e', '.'].include?(c)
+      return false if is_exponent && c == 'e'
+      return false if is_exponent && c == '.'
+      return false if is_exponent && (exponent_index + 1) != i && signs.include?(c)
+
+      if c == 'e'
+        is_exponent = true
+        exponent_index = i
+      end
+    end
+
+    true
+  end
 end
