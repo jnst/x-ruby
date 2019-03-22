@@ -98,4 +98,22 @@ module Code
 
     true
   end
+
+  # Sum up each domain.
+  def self.sum_domain(input)
+    output = {}
+
+    input.each do |v|
+      domain = v[0]
+      score = v[1]
+      arr = domain.split('.')
+      arr.each_with_index do |_, i|
+        k = arr.slice(i, arr.size).join('.')
+        v = output[k] || 0
+        output[k] = v + score
+      end
+    end
+
+    output
+  end
 end

@@ -62,3 +62,19 @@ RSpec.describe '#is_number' do
     expect(Code.is_number('.9')).to eq false
   end
 end
+
+RSpec.describe '#sum_domain' do
+  it 'should sum up each domain' do
+    input = [
+      ['example.com', 100],
+      ['news.example.com', 20],
+      ['google.com', 300]
+    ]
+    output = Code.sum_domain(input)
+    expect(output.keys.size).to eq 4
+    expect(output['com']).to eq 420
+    expect(output['example.com']).to eq 120
+    expect(output['news.example.com']).to eq 20
+    expect(output['google.com']).to eq 300
+  end
+end
